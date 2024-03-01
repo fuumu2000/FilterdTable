@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IconButton } from "@mui/material";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
 export type tblinput = {
@@ -17,9 +17,29 @@ export const FilteredTableComponent: React.FC<FilteredTableComponentProps> = ({
   input,
 }) => {
   const [filters, setFilters] = useState<string[]>([]);
+  const [filterOptions, setFilterOptions] = useState<string[]>([]);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleFilterClick = (index: number) => {
-    // フィルタリングロジックをここに実装します
+  const handleFilterClick = (
+    event: React.MouseEvent<HTMLElement>,
+    index: number
+  ) => {
+    const uniqueValues = Array.from(
+      new Set(input.tbldata.map((row) => row[index]))
+    );
+    uniqueValues.unshift("全データ");
+    setFilterOptions(uniqueValues);
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleFilterOptionClick = (option: string) => {
+    setSelectedFilters([...selectedFilters, option]);
+    setAnchorEl(null);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -33,7 +53,7 @@ export const FilteredTableComponent: React.FC<FilteredTableComponentProps> = ({
                 {input.filtersw[index] && (
                   <IconButton
                     size="small"
-                    onClick={() => handleFilterClick(index)}
+                    onClick={(event) => handleFilterClick(event, index)}
                   >
                     <FilterListIcon />
                   </IconButton>
@@ -52,6 +72,13 @@ export const FilteredTableComponent: React.FC<FilteredTableComponentProps> = ({
           ))}
         </tbody>
       </table>
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+        {filterOptions.map((option, index) => (
+          <MenuItem key={index} onClick={() => handleFilterOptionClick(option)}>
+            {option}
+          </MenuItem>
+        ))}
+      </Menu>
     </div>
   );
 };
