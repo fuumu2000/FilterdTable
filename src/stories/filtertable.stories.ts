@@ -64,7 +64,7 @@ const tbldadta: tblinput = {
     // 合計で30行になるようにデータを追加してください
   ],
   filtersw: [true, true, true, false, true, true, true, true],
-  height: 500,
+  height: 200,
 };
 
 export const LoggedIn: Story = {

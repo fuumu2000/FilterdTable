@@ -95,7 +95,14 @@ export const FilteredTableComponent: React.FC<FilteredTableComponentProps> = ({
       </table>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         {filterOptions.map((option, index) => (
-          <MenuItem key={index} onClick={() => handleFilterOptionClick(option)}>
+          <MenuItem
+            key={index}
+            onClick={() => handleFilterOptionClick(option)}
+            selected={
+              currentColumnIndex !== null &&
+              option === selectedFilters[currentColumnIndex]
+            }
+          >
             {option}
           </MenuItem>
         ))}
