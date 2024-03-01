@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 
@@ -16,9 +16,11 @@ type FilteredTableComponentProps = {
 export const FilteredTableComponent: React.FC<FilteredTableComponentProps> = ({
   input,
 }) => {
-  const [filters, setFilters] = useState<string[]>([]);
   const [filterOptions, setFilterOptions] = useState<string[]>([]);
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>(
+    new Array(input.tbltitle.length).fill("全データ")
+  );
+  const [filteredData, setFilteredData] = useState<string[][]>(input.tbldata);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleFilterClick = (
@@ -33,14 +35,27 @@ export const FilteredTableComponent: React.FC<FilteredTableComponentProps> = ({
     setAnchorEl(event.currentTarget);
   };
 
-  const handleFilterOptionClick = (option: string) => {
-    setSelectedFilters([...selectedFilters, option]);
+  const handleFilterOptionClick = (option: string, index: number) => {
+    const newSelectedFilters = [...selectedFilters];
+    newSelectedFilters[index] = option;
+    setSelectedFilters(newSelectedFilters);
     setAnchorEl(null);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    const newFilteredData = input.tbldata.filter((row) =>
+      row.every(
+        (cell, index) =>
+          selectedFilters[index] === "全データ" ||
+          cell === selectedFilters[index]
+      )
+    );
+    setFilteredData(newFilteredData);
+  }, [input.tbldata, selectedFilters]);
 
   return (
     <div style={{ height: input.height || 250 }}>
@@ -63,7 +78,7 @@ export const FilteredTableComponent: React.FC<FilteredTableComponentProps> = ({
           </tr>
         </thead>
         <tbody>
-          {input.tbldata.map((row, rowIndex) => (
+          {filteredData.map((row, rowIndex) => (
             <tr key={rowIndex}>
               {row.map((cell, cellIndex) => (
                 <td key={cellIndex}>{cell}</td>
@@ -74,7 +89,10 @@ export const FilteredTableComponent: React.FC<FilteredTableComponentProps> = ({
       </table>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         {filterOptions.map((option, index) => (
-          <MenuItem key={index} onClick={() => handleFilterOptionClick(option)}>
+          <MenuItem
+            key={index}
+            onClick={() => handleFilterOptionClick(option, index)}
+          >
             {option}
           </MenuItem>
         ))}
