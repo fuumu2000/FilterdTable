@@ -1,0 +1,29 @@
+1. **コンポーネント名**：作成するコンポーネントの名前は何ですか？
+2. **機能**：このコンポーネントは何をする必要がありますか？
+3. **Props**：このコンポーネントはどのようなpropsを受け取りますか？それぞれのpropsの型は何ですか？
+4. **State**：このコンポーネントは内部状態を持つ必要がありますか？もしあるなら、それぞれの状態の名前と型は何ですか？
+5. **イベントハンドラ**：このコンポーネントはどのようなイベントを処理する必要がありますか？
+6. **スタイル**：このコンポーネントには特定のスタイルが必要ですか？
+7. **その他**：その他、特別な要求や注意点はありますか？
+
+
+
+
+
+
+
+
+------------------
+
+git remote add origin https://github.com/fuumu2000/FilterdTable.git
+git branch -M main
+git push -u origin main
+
+------------------
+echo "# FilterdTable" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/fuumu2000/FilterdTable.git
+git push -u origin main
