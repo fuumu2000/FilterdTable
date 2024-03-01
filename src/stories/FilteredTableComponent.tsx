@@ -22,6 +22,9 @@ export const FilteredTableComponent: React.FC<FilteredTableComponentProps> = ({
   );
   const [filteredData, setFilteredData] = useState<string[][]>(input.tbldata);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [currentColumnIndex, setCurrentColumnIndex] = useState<number | null>(
+    null
+  );
 
   const handleFilterClick = (
     event: React.MouseEvent<HTMLElement>,
@@ -32,13 +35,16 @@ export const FilteredTableComponent: React.FC<FilteredTableComponentProps> = ({
     );
     uniqueValues.unshift("全データ");
     setFilterOptions(uniqueValues);
+    setCurrentColumnIndex(index);
     setAnchorEl(event.currentTarget);
   };
 
-  const handleFilterOptionClick = (option: string, index: number) => {
-    const newSelectedFilters = [...selectedFilters];
-    newSelectedFilters[index] = option;
-    setSelectedFilters(newSelectedFilters);
+  const handleFilterOptionClick = (option: string) => {
+    if (currentColumnIndex !== null) {
+      const newSelectedFilters = [...selectedFilters];
+      newSelectedFilters[currentColumnIndex] = option;
+      setSelectedFilters(newSelectedFilters);
+    }
     setAnchorEl(null);
   };
 
@@ -89,10 +95,7 @@ export const FilteredTableComponent: React.FC<FilteredTableComponentProps> = ({
       </table>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         {filterOptions.map((option, index) => (
-          <MenuItem
-            key={index}
-            onClick={() => handleFilterOptionClick(option, index)}
-          >
+          <MenuItem key={index} onClick={() => handleFilterOptionClick(option)}>
             {option}
           </MenuItem>
         ))}

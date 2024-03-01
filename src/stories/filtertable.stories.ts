@@ -29,6 +29,11 @@ const tbldadta: tblinput = {
   ],
   tbldata: [
     ["A", "B", "C", "D", "E", "F", "G", "H"],
+    ["A", "BB", "C", "D", "E", "F", "G", "H"],
+    ["A", "BB", "CC", "D", "E", "F", "G", "H"],
+    ["A", "BB", "CC", "DD", "E", "F", "G", "H"],
+    ["A", "BB", "CC", "DD", "EE", "F", "G", "H"],
+    ["A", "BB", "CC", "DD", "EE", "FF", "G", "H"],
     ["I", "J", "K", "L", "M", "N", "O", "P"],
     ["Q", "R", "S", "T", "U", "V", "W", "X"],
     ["A", "B", "C", "D", "E", "F", "G", "H"],
@@ -58,7 +63,7 @@ const tbldadta: tblinput = {
     // 以下、同様にデータを追加
     // 合計で30行になるようにデータを追加してください
   ],
-  filtersw: [true, true, true, true, true, true, true, true],
+  filtersw: [true, true, true, false, true, true, true, true],
   height: 500,
 };
 
