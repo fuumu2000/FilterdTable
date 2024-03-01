@@ -75,6 +75,12 @@ export const FilteredTableComponent: React.FC<FilteredTableComponentProps> = ({
                   <IconButton
                     size="small"
                     onClick={(event) => handleFilterClick(event, index)}
+                    style={{
+                      color:
+                        selectedFilters[index] !== "全データ"
+                          ? "red"
+                          : "inherit",
+                    }}
                   >
                     <FilterListIcon />
                   </IconButton>
