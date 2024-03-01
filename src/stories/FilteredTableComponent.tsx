@@ -66,7 +66,7 @@ export const FilteredTableComponent: React.FC<FilteredTableComponentProps> = ({
   return (
     <div style={{ height: input.height || 250, overflow: "auto" }}>
       <table>
-        <thead style={{ position: "sticky", top: 0 }}>
+        <thead style={{ position: "sticky", top: 0, backgroundColor: "#fff" }}>
           <tr>
             <th>No</th>
             {input.tbltitle.map((title, index) => (
@@ -91,8 +91,11 @@ export const FilteredTableComponent: React.FC<FilteredTableComponentProps> = ({
           </tr>
         </thead>
         <tbody>
-          {filteredData.map((row, rowIndex) => (
-            <tr key={rowIndex}>
+          {input.tbldata.map((row, rowIndex) => (
+            <tr
+              key={rowIndex}
+              style={{ display: filteredData.includes(row) ? "" : "none" }}
+            >
               <td>{rowIndex + 1}</td>
               {row.map((cell, cellIndex) => (
                 <td key={cellIndex}>{cell}</td>
